@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { v4 as uuidv4 } from "uuid";
 
 import { ADD_INSTRUMENT, GET_INSTRUMENTS } from "../../queries/index";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: "100%",
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const AddInstrument = ({ artists }) => {
   const [id] = useState(uuidv4());
@@ -15,8 +27,10 @@ const AddInstrument = ({ artists }) => {
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
+  console.log("Artists", artists);
+  const [artist, setArtist] = useState(1);
 
-  const [artist, setArtist] = useState(artists[0]);
+  const classes = useStyles();
 
   // const [addArtist] = useMutation(ADD_INSTRUMENT, {
   //   update(cache, { data: { addartist } }) {
@@ -102,20 +116,22 @@ const AddInstrument = ({ artists }) => {
         type="number"
         style={{ margin: "10px" }}
       />
-      <Select
-        labelId="artist-select-outlined-label"
-        id="artist-select-outlined"
-        value={artist}
-        // onChange={handleChange}
-        label="Artist"
-        fullWidth
-      >
-        {artists.map((artist) => (
-          <MenuItem value={artist.id} key={artist.id}>
-            {fullName(artist)}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="demo-simple-select-outlined-label">Artist</InputLabel>
+        <Select
+          labelId="artist-select-outlined-label"
+          id="artist-select-outlined"
+          value={artist}
+          // onChange={handleChange}
+          label="Artist"
+        >
+          {artists.map((artist) => (
+            <MenuItem value={artist.id} key={artist.id}>
+              {fullName(artist)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <Button
         type="submit"
         variant="contained"
