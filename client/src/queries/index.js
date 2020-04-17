@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from "apollo-boost";
 
 export const GET_ARTISTS = gql`
   {
@@ -8,7 +8,17 @@ export const GET_ARTISTS = gql`
       lastName
     }
   }
-`
+`;
+
+export const GET_ARTIST = gql`
+  query Artist($id: String!) {
+    artist(id: $id) {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
 
 export const ADD_ARTIST = gql`
   mutation AddArtist($id: String!, $firstName: String!, $lastName: String!) {
@@ -18,7 +28,7 @@ export const ADD_ARTIST = gql`
       lastName
     }
   }
-`
+`;
 
 export const UPDATE_ARTIST = gql`
   mutation UpdateArtist($id: String!, $firstName: String!, $lastName: String!) {
@@ -28,7 +38,7 @@ export const UPDATE_ARTIST = gql`
       lastName
     }
   }
-`
+`;
 
 export const REMOVE_ARTIST = gql`
   mutation RemoveArtist($id: String!) {
@@ -38,4 +48,44 @@ export const REMOVE_ARTIST = gql`
       lastName
     }
   }
-`
+`;
+
+export const GET_INSTRUMENTS = gql`
+  query Instruments($artistId: String!) {
+    instruments(artistId: $artistId) {
+      id
+      year
+      brand
+      type
+      price
+      artistId
+    }
+  }
+`;
+
+export const ADD_INSTRUMENT = gql`
+  mutation AddInstrument(
+    $id: String!
+    $year: String!
+    $brand: String!
+    $type: String!
+    $price: String!
+    $artistId: String!
+  ) {
+    addInstrument(
+      id: $id
+      year: $year
+      brand: $brand
+      type: $type
+      price: $price
+      artistId: $artistId
+    ) {
+      id
+      year
+      brand
+      type
+      price
+      artistId
+    }
+  }
+`;
