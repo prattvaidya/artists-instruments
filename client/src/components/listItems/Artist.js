@@ -17,9 +17,10 @@ const useStyles = makeStyles({
   },
 });
 
-const Artist = () => {
+const Artist = ({ setArtists }) => {
   const { loading, error, data } = useQuery(GET_ARTISTS);
   console.log("data", data);
+  if (data) setArtists(data.artists);
   console.log("loading", loading);
   console.log("error", error);
   const classes = useStyles();

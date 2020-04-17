@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Container from "@material-ui/core/Container";
 
@@ -10,13 +10,14 @@ import Title from "../layout/Title";
 import "../../App.css";
 
 const Home = () => {
+  const [artists, setArtists] = useState([]);
   return (
     <div>
       <Container className="App">
         <Title />
         <AddArtist />
-        <AddInstrument />
-        <Artist />
+        <AddInstrument artists={artists} />
+        <Artist setArtists={setArtists} />
       </Container>
     </div>
   );

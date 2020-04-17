@@ -3,17 +3,20 @@ import { useMutation } from "@apollo/react-hooks";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { v4 as uuidv4 } from "uuid";
 
 import { ADD_INSTRUMENT, GET_INSTRUMENTS } from "../../queries/index";
 
-const AddInstrument = () => {
+const AddInstrument = ({ artists }) => {
   const [id] = useState(uuidv4());
   const [Year, setYear] = useState("");
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
+
+  const [artist, setArtist] = useState(artists[0]);
 
   // const [addArtist] = useMutation(ADD_INSTRUMENT, {
   //   update(cache, { data: { addartist } }) {
@@ -24,6 +27,8 @@ const AddInstrument = () => {
   //     });
   //   },
   // });
+
+  const fullName = (artist) => `${artist.firstName} ${artist.lastName}`;
 
   return (
     <form
@@ -97,6 +102,20 @@ const AddInstrument = () => {
         type="number"
         style={{ margin: "10px" }}
       />
+      <Select
+        labelId="artist-select-outlined-label"
+        id="artist-select-outlined"
+        value={artist}
+        // onChange={handleChange}
+        label="Artist"
+        fullWidth
+      >
+        {artists.map((artist) => (
+          <MenuItem value={artist.id} key={artist.id}>
+            {fullName(artist)}
+          </MenuItem>
+        ))}
+      </Select>
       <Button
         type="submit"
         variant="contained"
